@@ -58,7 +58,7 @@ def viewing(timer):
             count_number -=1
             count_color = (0,0,0)
 
-        if b-a >= datetime.timedelta(microseconds=100000):
+        if b-a >= datetime.timedelta(microseconds=1000000):
             count_color= (count_color[0]+20,count_color[1]+20,count_color[2]+20)
 
         img = cv.rotate(img, cv.ROTATE_90_CLOCKWISE)
@@ -66,8 +66,7 @@ def viewing(timer):
         img = img_resizing_screen(img)
         
         # cv.rectangle(img, (0, 0), (screen_width, int(screen_height*.1)), (255, 255,255), thickness=cv.FILLED)
-        img =cv.putText(img, str(count_number), (int(screen_width/3), int(screen_height*.2)), 6, 15,count_color, 14, cv.LINE_AA)   
-     
+        img =cv.putText(img, str(count_number), (int(screen_width/3), int(screen_height*.15)), 6, 13,count_color, 14, cv.LINE_AA)   
         cv.imshow('capturing', img)
         cv.waitKey(1)
 
@@ -80,8 +79,9 @@ def viewing(timer):
 def img_resizing_screen(img):
     global w,h
     w,h = resize_ratio(img.shape[0],img.shape[1], width=int(screen_width))
+    h = int(h*1.5)
     img = cv.resize(img, (w,h))
-    img = cv.copyMakeBorder(img, int((screen_height-h)/2), int((screen_height-h)/2), 0, 0, cv.BORDER_CONSTANT, value=(255, 255, 255))    
+    img = cv.copyMakeBorder(img, int((screen_height-h-100)/2), int((screen_height-h-100)/2), 0, 0, cv.BORDER_CONSTANT, value=(255, 255, 255))    
     # # upper border
     # img = cv.rectangle(img, (0, 0), (w, int(screen_height*.1)), (255, 255,255), thickness=cv.FILLED)
     # # lower border
@@ -95,7 +95,7 @@ def border_printer(img):
 
 
 #main variables 
-keys = ['q','s','Esc', 'Q','p', 'r','w']
+keys = ['w', 'b']
 
 
 sleepcounter = datetime.datetime.now()
@@ -198,8 +198,8 @@ while True:
         img = img_resizing_screen(img)
         cv.imwrite(day+'/'+daytime+'.jpg', img)
         
-        cv.putText(img, cap_name, (int(screen_width*.01),int(screen_height*.92)), 6, 2,color, 2, cv.LINE_AA)   
-        cv.putText(img, date, (int(screen_width*.01),int(screen_height*.96)), 6, 2,color, 2, cv.LINE_AA)   
+        cv.putText(img, cap_name, (int(screen_width*.01),int(screen_height*.88)), 6, 3,color, 2, cv.LINE_AA)   
+        cv.putText(img, date, (int(screen_width*.01),int(screen_height*.94)), 6, 3,color, 2, cv.LINE_AA)   
         to_print = 1
         was_pressed = False
         cv.imwrite('photos/'+daytime+'.jpg', img)
@@ -239,11 +239,11 @@ while True:
                     print_img = paste_for_logo(day+'/'+daytime+'.jpg','import/logo/'+sec_logo+'.png','left')
                     cv.imwrite(day+'/'+daytime+'.jpg', print_img)
                     
-                text_height = (h*1.1) + ((screen_height-h)/2)
-                cv.putText(print_img, cap_name, (int(screen_width*.1),int(text_height)), 6, 2,color, 2, cv.LINE_AA)   
-                text_height = (h*1.2) + ((screen_height-h)/2)
+                text_height = (h*.84) + ((screen_height-h)/2)
+                cv.putText(print_img, cap_name, (int(screen_width*.06),int(text_height)), 6, 3,color, 2, cv.LINE_AA)   
+                text_height = (h*.91) + ((screen_height-h)/2)
                 # cv.putText(print_img, date, (int(screen_width*.01),int(screen_height*.96)), 6, 2,color, 2, cv.LINE_AA)   
-                cv.putText(print_img, date, (int(screen_width*.1),int(text_height)), 6, 2,color, 2, cv.LINE_AA)   
+                cv.putText(print_img, date, (int(screen_width*.06),int(text_height)), 6, 2,color, 2, cv.LINE_AA)   
 
                 cv.imwrite(day+'/'+daytime+'.jpg', print_img)
                 print_img= cv.imread(day+'/'+daytime+'.jpg')
@@ -257,11 +257,6 @@ while True:
                 # w,h = resize_ratio(print_img.shape[0],img.shape[1], width=int(screen_width))
                 print_img = cv.resize(print_img, (int(screen_width*.95),int(screen_height*.9)))
                 cv.imwrite(day+'/'+daytime+'.jpg', print_img)
-
-                
-                
-                
-                
                 
                 for i in range(to_print):
                     try:
@@ -288,14 +283,14 @@ while True:
                     # print_img = cv.resize(print_img, (int(screen_width*.95),int(screen_height*.9)))
 
                     cv.imwrite(day+'/'+daytime+'.jpg', print_img)
-                    # print_photo(day+'/'+daytime+'.jpg')
+                    print_photo(day+'/'+daytime+'.jpg')
                     if printed_photos>= max_person:
                         break                    
                 okay = False
                 os.remove('photos/'+daytime+'.jpg')
                 cv.destroyWindow('saved')
             
-            if keyboard.is_pressed('f5'):
+            if keyboard.is_pressed('w') :
                 os.remove(day+'/'+daytime+'.jpg')
                 os.remove('photos/'+daytime+'.jpg')
 
@@ -311,13 +306,19 @@ while True:
     # img = cv.rotate(img, cv.cv2.ROTATE_180_CLOCKWISE)
     img = cv.rotate(img, cv.ROTATE_90_CLOCKWISE)
 
-    cv.imwrite('i.jpg',img_resizing_screen(img) )
-    img = paste_buttons('i.jpg',cam_dir, printer_dir)
+    try:
+        cv.imwrite('photos/i.jpg',img_resizing_screen(img) )
+    except:
+        _, img = vid.read()
+        img = cv.rotate(img, cv.ROTATE_90_CLOCKWISE)
+        cv.imwrite('photos/i.jpg',img_resizing_screen(img) )
+
+    img = paste_buttons('photos/i.jpg',cam_dir, printer_dir)
     cv.imshow('window',img )
 
 
     # the 'q' or 'Esc' button is set as the
-    if cv.waitKey(1) == ord('q') or keyboard.is_pressed('Esc') or keyboard.is_pressed('Q') or keyboard.is_pressed('alt+f4')  or printed_photos>=max_number:
+    if cv.waitKey(1) == ord('q') or keyboard.is_pressed('Q') or keyboard.is_pressed('alt+f4')  or printed_photos>=max_number:
         break
 
 # After the loop release the cap object
