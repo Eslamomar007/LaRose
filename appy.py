@@ -253,14 +253,10 @@ while True:
                 printed_photos+=1
                 
                 
-                
                 # w,h = resize_ratio(print_img.shape[0],img.shape[1], width=int(screen_width))
                 print_img = cv.resize(print_img, (int(screen_width*.95),int(screen_height*.9)))
                 cv.imwrite(day+'/'+daytime+'.jpg', print_img)
 
-                
-                
-                
                 
                 
                 for i in range(to_print):
