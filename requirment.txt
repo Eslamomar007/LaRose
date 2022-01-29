@@ -1,0 +1,7 @@
+tk
+opencv-python
+Pillow
+keyboard
+numpy
+screeninfo
+rotate-screen

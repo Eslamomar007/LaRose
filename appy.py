@@ -1,13 +1,12 @@
 from tkinter import *
 import cv2 as cv
-from threading import Thread 
+# from threading import Thread 
 from PIL import ImageTk, Image
 import keyboard
 import numpy as np
 from time import strftime ,sleep
 from screeninfo import get_monitors
 import datetime
-from files import create_files
 import os
 import rotatescreen
 
@@ -21,6 +20,7 @@ from dis_mode import chose_mode
 from second_logo import chose_sec_logo
 
 
+from files import create_files
 from paste_two_imges import paste_for_screen
 from paste_img_logo import paste_for_logo
 from paste_buttons import paste_buttons
@@ -32,6 +32,7 @@ vid = cv.VideoCapture(0)
 screen_width = get_monitors()[0].width
 screen_height = get_monitors()[0].height
 rotate_screen = rotatescreen.get_primary_display()
+rotate_screen.set_portrait_flipped()
 
 def viewing(timer): 
     a = datetime.datetime.now()
