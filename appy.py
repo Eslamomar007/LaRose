@@ -290,7 +290,7 @@ while True:
                 os.remove('photos/'+daytime+'.jpg')
                 cv.destroyWindow('saved')
             
-            if keyboard.is_pressed('w') :
+            if keyboard.is_pressed('w') or keyboard.is_pressed('f5') :
                 os.remove(day+'/'+daytime+'.jpg')
                 os.remove('photos/'+daytime+'.jpg')
 
