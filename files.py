@@ -4,9 +4,10 @@ import datetime
 day =(datetime.datetime.now()-datetime.timedelta(hours=3)).strftime("%Y-%m-%d") 
 
 def create_files():
-    files = ['photos', 'logo','frame']
+    files = [ 'logo','frame']
     try:
         os.mkdir('import')
+        os.mkdir('photos')
     except:
         pass
     

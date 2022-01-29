@@ -14,17 +14,17 @@ def paste_for_logo(filename1,filename, l = None):
     
     # resize the front img
     unite = int(background.width)*1.5
-    frontImage = frontImage.resize((int(unite/6), int(unite/5)), Image.ANTIALIAS)
+    frontImage = frontImage.resize((int(unite/4), int(unite/6)), Image.ANTIALIAS)
 
     # Convert image to RGBA
     frontImage = frontImage.convert("RGBA")
     
     # Convert image to RGBA
     background = background.convert("RGBA")
-    position=(int((background.width/2)-(frontImage.width/2)), int(frontImage.height)+30)
+    position=(int((background.width/2)-(frontImage.width/2)), int(frontImage.height)-140)
     
     if l=='left':
-        position=(int(background.width-frontImage.width)-int(background.width*.05),int(background.height-frontImage.height)-400)
+        position=(int(background.width-frontImage.width)-int(background.width*.05),int(background.height-frontImage.height)-50)
 
     # Paste the frontImage at (width, height)
     background.paste(frontImage, position, frontImage)

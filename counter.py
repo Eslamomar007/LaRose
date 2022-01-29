@@ -29,10 +29,8 @@ def chose_counter():
 
     label2= Label(root,font=('calibre',20, 'bold'), text='Chose a counter time')
     label2.grid(row=0, column = 0, padx=20,pady=20, sticky='s')
-
-    co_number=2
-    ro_number=0
-   
+    label3= Label(root,font = ('calibre',1, 'bold'), text='')
+    label3.grid(row=1, column = 0,padx=0,pady=int(screen_height*.2),  sticky='s')   
     counter= IntVar()
     def globy():
         global ln
@@ -42,11 +40,11 @@ def chose_counter():
             ln='None'
     font=('calibre',10, 'bold')
     radiobtn = Radiobutton(root,font=font, variable= counter, text= 'no timer', value =0, command=globy)
-    radiobtn.grid(row=1,column=0, padx=20,pady=20, sticky='w')
+    radiobtn.grid(row=2,column=0, padx=20,pady=20, sticky='w')
     radiobtn.select()
     for i in range(5,33,5):
         radiobtn = Radiobutton(root,font=font,text=str(i), variable= counter, value =i, command = globy )
-        radiobtn.grid(row=1,column=i+1, padx=20,pady=20, sticky='e')
+        radiobtn.grid(row=2,column=i+1, padx=20,pady=20, sticky='e')
         
     bt2= Button(root, text="chose, next->", command=root.destroy)
     bt2.grid(row=10, column=0, padx=20,pady=20, sticky ='w')

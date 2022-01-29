@@ -30,9 +30,10 @@ def chose_frame():
     imgs = os.listdir('import/frame/')
     label2= Label(root,font = font, text='Chose a Frame')
     label2.grid(row=0, column = 0,padx=20,pady=20,  sticky='s')
-
+    label3= Label(root,font = font, text='')
+    label3.grid(row=1, column = 0,padx=20,pady=int(screen_height*.2),  sticky='s')
     co_number=2
-    ro_number=0
+    ro_number=2
    
     frame_name = StringVar()
     def globy():
@@ -43,23 +44,23 @@ def chose_frame():
             fn=None
 
     radiobtn = Radiobutton(root,font=('calibre',20, 'bold'), variable= frame_name, text= 'no frame', value ='None', command=globy)
-    radiobtn.grid(row=1,column=0,padx=20,pady=20, sticky='w')
+    radiobtn.grid(row=2,column=0,padx=20,pady=20, sticky='w')
     
     for i, name in enumerate(imgs):
         global  img
         img = Image.open('import/frame/'+name)
         width, height = img.size
-        new_height = int(screen_height*.2)
-        new_width = int(screen_width*.2)
+        new_height = int(screen_height*.15)
+        new_width = int(screen_width*.15)
         img = img.resize((new_width, new_height), Image.ANTIALIAS)
         img = ImageTk.PhotoImage(img)
-        if i%4==0:
+        if i%2==0:
             co_number +=1
-            ro_number=0
+            ro_number=2
             
         imgs[i]= img
         radiobtn = Radiobutton(root, variable= frame_name, image=img, value =name[:-4], command = globy )
-        radiobtn.grid(row=ro_number,column=co_number,padx=20,pady=20, sticky='e')
+        radiobtn.grid(row=ro_number, column=co_number,padx=20, pady=20, sticky='e')
         ro_number+=1
 
 
