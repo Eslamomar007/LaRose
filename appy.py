@@ -30,7 +30,7 @@ from resize_ratio import resize_ratio
 vid = cv.VideoCapture(0)
 vid.set(3, 1920) # set the resolution
 vid.set(4, 1080)
-vid.set(cv.CAP_PROP_AUTOFOCUS, 1) # turn the autofocus off
+vid.set(cv.CAP_PROP_AUTOFOCUS, 1) # turn the autofocus on
 
 
 
@@ -53,15 +53,11 @@ def viewing(timer):
         global captured_img
         _ , img = vid.read()
 
-        b = datetime.datetime.now()
-        # img = cv.rotate(img, cv.cv2.ROTATE_180_CLOCKWISE)
-        
+        b = datetime.datetime.now()        
         captured_img = img
         cv.namedWindow("capturing", cv.WINDOW_NORMAL )
         cv.setWindowProperty("capturing",cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
-        # if b-a >= datetime.timedelta(seconds=timer):
-        #     stop_thread= False
-
+        
         if b-a >= datetime.timedelta(seconds=x):
             x+=1
             count_number -=1
@@ -74,11 +70,7 @@ def viewing(timer):
         img = cv.rotate(img, cv.ROTATE_90_CLOCKWISE)
         
         img = img_resizing_screen(img)
-        
-        # cv.rectangle(img, (0, 0), (screen_width, int(screen_height*.1)), (255, 255,255), thickness=cv.FILLED)
-        # img =cv.putText(img, str(count_number), (int(screen_width/3.5), int(screen_height*.17)), 4, 14,count_color, 15, cv.LINE_AA)   
         img =cv.putText(img, str(count_number), (int(screen_width/3.5), int(screen_height*.16)), 2, 14,count_color, 16, cv.LINE_AA)   
-        # img =cv.putText(img, str(count_number), (int(screen_width/3), int(screen_height*.8)), 2, 14,count_color, 15, cv.LINE_AA)   
         cv.imshow('capturing', img)
         cv.waitKey(1)
 
@@ -95,17 +87,7 @@ def img_resizing_screen(img):
     w=int(w*.95)
     img = cv.resize(img, (w,h))
     img = cv.copyMakeBorder(img, int((screen_height-h-250)/2), int((screen_height-h-250)/2), 0, 0, cv.BORDER_CONSTANT, value=(255, 255, 255))    
-    # # upper border
-    # img = cv.rectangle(img, (0, 0), (w, int(screen_height*.1)), (255, 255,255), thickness=cv.FILLED)
-    # # lower border
-    # img = cv.rectangle(img, (0, int(screen_height*.9)), (screen_width, int(screen_height)), (255, 255,255), thickness=cv.FILLED)
     return img 
-
-# #modifing image size to printer
-# def border_printer(img):
-#     img = cv.copyMakeBorder(img, int(screen_height*.1), int(screen_height*.1), 0, 0, cv.BORDER_CONSTANT, value=(0, 0, 0))    
-#     return img 
-
 
 #main variables 
 keys = ['page up', 'b']
@@ -121,7 +103,6 @@ cap_name, date,color = caption_date()
 sec_logo = chose_sec_logo()
 
 max_number,max_person = imgnumber()
-# display_mode = chose_mode()
 
 logo = 'main_logo'
 printer_dir='import/buttons/'+'printer.png'
@@ -136,13 +117,9 @@ while True:
     daytime =strftime("%Y-%m-%d %H_%M_%S")
     day =(datetime.datetime.now()-datetime.timedelta(hours=4)).strftime("%Y-%m-%d") 
     # detecting sleeping mode
-
     _ , img = vid.read()
-
-
     for k in keys:
             sleepcounter = datetime.datetime.now()
-
 
     if datetime.timedelta(seconds = 600) + sleepcounter  <= datetime.datetime.now():   
         cv.namedWindow("sleeping", cv.WINDOW_NORMAL )
@@ -203,19 +180,15 @@ while True:
             img = paste_for_screen('photos/'+daytime+'.jpg','import/frame/'+frame+'.png')
             cv.imwrite('photos/'+daytime+'.jpg', img)
                     
-
         # writing on the screen
         img = cv.rotate(img, cv.ROTATE_90_CLOCKWISE)
-
         img = img_resizing_screen(img)
         cv.imwrite(day+'/'+daytime+'.jpg', img)
-        
         cv.putText(img, cap_name, (int(screen_width*.01),int(screen_height*.79)), 6, 3,color, 2, cv.LINE_AA)   
         cv.putText(img, date, (int(screen_width*.01),int(screen_height*.85)), 6, 3,color, 2, cv.LINE_AA)   
         to_print = 1
         was_pressed = False
         cv.imwrite('photos/'+daytime+'.jpg', img)
-        
         img = paste_buttons('photos/'+daytime+'.jpg',cam_dir, printer_dir) 
         while okay ==True:
             cv.namedWindow("saved", cv.WINDOW_NORMAL )
@@ -239,11 +212,6 @@ while True:
             cv.putText(img, 'copy: '+str(to_print), (int(screen_width*.33),int(screen_height*.09)), 5, 3,(0, 0, 0), 2, cv.LINE_AA)   
          
             if keyboard.is_pressed('b'):
-                # img = cv.rectangle(img, (0, 0), (int(img.shape[0]), int((screen_height-h)/2)), (255, 255,255), thickness=cv.FILLED)
-             
-                # img = cv.rotate(img, cv.ROTATE_90_COUNTERCLOCKWISE)
-                # print_img = cv.rotate(print_img, cv.ROTATE_90_CLOCKWISE)
-
                 print_img = paste_for_logo(day+'/'+daytime+'.jpg','import/buttons/'+logo+'.png')
                 cv.imwrite(day+'/'+daytime+'.jpg', print_img)
 
@@ -254,19 +222,13 @@ while True:
                 text_height = (h*.96) + ((screen_height-h)/2)
                 cv.putText(print_img, cap_name, (int(screen_width*.06),int(text_height)), 6, 3,color, 2, cv.LINE_AA)   
                 text_height = (h*1.03) + ((screen_height-h)/2)
-                # cv.putText(print_img, date, (int(screen_width*.01),int(screen_height*.96)), 6, 2,color, 2, cv.LINE_AA)   
                 cv.putText(print_img, date, (int(screen_width*.06),int(text_height)), 6, 2,color, 2, cv.LINE_AA)   
-
                 cv.imwrite(day+'/'+daytime+'.jpg', print_img)
                 print_img= cv.imread(day+'/'+daytime+'.jpg')
                 h,y,_ = print_img.shape
                 print_img = print_img[int(h*.05):h,0:y]
                 print_img = print_img[0:int(h*.94),0:y]
                 printed_photos+=1
-                
-                
-                
-                # w,h = resize_ratio(print_img.shape[0],img.shape[1], width=int(screen_width))
                 print_img = cv.resize(print_img, (int(screen_width*.95),int(screen_height*.9)))
                 cv.imwrite(day+'/'+daytime+'.jpg', print_img)
                 
@@ -275,24 +237,6 @@ while True:
                         os.mkdir(str(day))
                     except:
                         pass
-
-                    # if display_mode:
-                    #     print_img = cv.rotate(print_img, cv.cv2.ROTATE_90_CLOCKWISE)
-                    
-                    
-                    # print_img = cv.rotate(print_img, cv.ROTATE_90_CLOCKWISE)            
-
-                    # cv.imwrite(day+'/'+daytime+'.jpg', print_img)
-                    # print_img= cv.imread(day+'/'+daytime+'.jpg')
-                    # h,y,_ = print_img.shape
-                    # print_img = print_img[int(h*.15):h,0:y]
-                    # print_img = print_img[0:int(h*.7),0:y]
-                    # printed_photos+=1
-                    
-                    
-                    
-                    # # w,h = resize_ratio(print_img.shape[0],img.shape[1], width=int(screen_width))
-                    # print_img = cv.resize(print_img, (int(screen_width*.95),int(screen_height*.9)))
 
                     cv.imwrite(day+'/'+daytime+'.jpg', print_img)
                     print_photo(day+'/'+daytime+'.jpg')
@@ -312,10 +256,6 @@ while True:
             cv.waitKey(1)
     cv.namedWindow("window", cv.WINDOW_NORMAL )
     cv.setWindowProperty("window",cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
-    
-    # img = cv.rotate(img, cv.ROTATE_90_CLOCKWISE)
-
-    # img = cv.rotate(img, cv.cv2.ROTATE_180_CLOCKWISE)
     img = cv.rotate(img, cv.ROTATE_90_CLOCKWISE)
 
     try:
@@ -338,15 +278,6 @@ vid.release()
 # Destroy all the windows
 cv.destroyAllWindows()
 
-# import cv2
-# https://stackoverflow.com/questions/43987467/how-do-i-crop-an-image-in-opencv-and-python-based-on-percentage
-# def crop_img(img, scale=1.0):
-#     center_x, center_y = img.shape[1] / 2, img.shape[0] / 2
-#     width_scaled, height_scaled = img.shape[1] * scale, img.shape[0] * scale
-#     left_x, right_x = center_x - width_scaled / 2, center_x + width_scaled / 2
-#     top_y, bottom_y = center_y - height_scaled / 2, center_y + height_scaled / 2
-#     img_cropped = img[int(top_y):int(bottom_y), int(left_x):int(right_x)]
-#     return img_cropped
+# img = cv.rotate(img, cv.ROTATE_90_CLOCKWISE)
 
-# img = cv2.imread('lena.jpg')
-# img_cropped = crop_img(img, 0.75)
+# img = cv.rotate(img, cv.cv2.ROTATE_180_CLOCKWISE)
