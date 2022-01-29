@@ -39,6 +39,7 @@ vid.set(cv.CAP_PROP_AUTOFOCUS, 1) # turn the autofocus off
 screen_width = get_monitors()[0].width
 screen_height = get_monitors()[0].height
 rotate_screen = rotatescreen.get_primary_display()
+rotate_screen.set_portrait_flipped()
 
 def viewing(timer): 
     a = datetime.datetime.now()
