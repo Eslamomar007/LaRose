@@ -23,12 +23,14 @@ def chose_logo():
     background = Label( root, image = bg)
     background.place(x = 0,y = 0)
     # Adjust size
+    font = ('calibre',20, 'bold')
     imgs = os.listdir('import/logo/')
     Label2= Label(root,font=('calibre',20, 'bold'), text='Chose a Logo').grid(row=0, column = 0, padx=20,pady=20, sticky='s')
+    label3= Label(root,font = font, text='')
+    label3.grid(row=1, column = 0,padx=20,pady=int(screen_height*.2),  sticky='s')
 
     co_number=2
-    ro_number=0
-    font = ('calibre',20, 'bold')
+    ro_number=2
     logo_name = StringVar()
     def globy():
         global ln
@@ -43,13 +45,13 @@ def chose_logo():
         img = Image.open('import/logo/'+name)
         # img = img.rotate(90, PIL.Image.NEAREST, expand = 1)
         width, height = img.size
-        new_height = int(screen_height*.2)
-        new_width = int(screen_width*.2)
+        new_height = int(screen_height*.1)
+        new_width = int(screen_width*.3)
         img = img.resize((new_width, new_height), Image.ANTIALIAS)
         img = ImageTk.PhotoImage(img)
         if i%4==0:
             co_number +=1
-            ro_number=0
+            ro_number=2
 
         imgs[i]= img
         radiobtn = Radiobutton(root,variable= logo_name, image=img, value =name[:-4], command = globy ).grid(row=ro_number,column=co_number, padx=10,pady=10, sticky='e')

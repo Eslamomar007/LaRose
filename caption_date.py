@@ -26,6 +26,13 @@ def caption_date():
     # Adjust size
 
     font=('calibre',20, 'bold')
+    label1= Label(root,font=font, text='Enter your subtitle').grid(row=0, column = 0,padx=20,pady=20, sticky='w')
+
+    label3= Label(root,font = ('calibre',1, 'bold'), text='')
+    label3.grid(row=1, column = 0,padx=20,pady=int(screen_height*.2),  sticky='s')
+
+    
+    
     cap_na= StringVar()
     date_var= StringVar()
     def globy():
@@ -35,13 +42,13 @@ def caption_date():
         d = date.get()
         root.destroy()
 
-    label1= Label(root,font=font, text='Enter caption or name').grid(row=0, column = 0,padx=20,pady=20, sticky='w')
-    caption_name = Entry(root,width=40,textvariable = cap_na, font=font)
-    caption_name.grid(row=1, column = 0,padx=20,pady=20, sticky='w')
+    label1= Label(root,font=font, text='Enter caption or name').grid(row=2, column = 0,padx=20,pady=20, sticky='w')
+    caption_name = Entry(root,width=30,textvariable = cap_na, font=font)
+    caption_name.grid(row=3, column = 0,padx=20,pady=20, sticky='w')
 
-    label2= Label(root,font=font, text='Enter the date').grid(row=0, column = 1,padx=20,pady=20, sticky='w')
-    date = Entry(root,width=30, textvariable = date_var, font=font)
-    date.grid(row=1, column = 1,padx=20,pady=20, sticky='w')
+    label2= Label(root,font=font, text='Enter the date').grid(row=2, column = 1,padx=20,pady=20, sticky='w')
+    date = Entry(root,width=25, textvariable = date_var, font=font)
+    date.grid(row=3, column = 1,padx=20,pady=20, sticky='w')
 
 
     date_var.set(' ')
@@ -69,7 +76,7 @@ def caption_date():
                 command = choose_color)
                 
     button.config(font=(('calibre',20, 'bold')))
-    button.grid(row=3, column= 0,padx=20,pady=20,sticky='w')
+    button.grid(row=5, column= 0,padx=20,pady=20,sticky='w')
 
     bt2 = Button(root, text="chose, next->", command=globy)
     bt2.config(font=(('calibre',20, 'bold')))

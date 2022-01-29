@@ -25,6 +25,7 @@ def imgnumber():
     background.place(x = 0,y = 0)
     # Adjust size
     font_data=('calibre',15, 'bold')
+    label1= Label(root,font=('calibre',20, 'bold'), text='Number of allowed images').grid(row=0, column = 0,padx=20,pady=20, sticky='e')
 
     def globy():
         global i_number        
@@ -34,18 +35,22 @@ def imgnumber():
             p_number=int(numberp.get().strip()) 
             root.destroy()
         except:
-            flush= Label(root,font=font_data, fg = 'red')
-            flush.grid(row=4, column = 0,padx=20,pady=20, sticky='e')
+            flush= Label(root,font=font_data, fg = 'red', text='pleas enter only numbers')
+            flush.grid(row=4, column = 0,padx=20,pady=20, sticky='w')
             numberi.delete(0,END)
             numberp.delete(0,END)
+    
+    
+    label3= Label(root,font = ('calibre',1, 'bold'), text='')
+    label3.grid(row=1, column = 0,padx=0,pady=int(screen_height*.2),  sticky='s')   
 
-    label1= Label(root,font=('calibre',15, 'bold'), text='Enter number of allowed images').grid(row=0, column = 0,padx=20,pady=20, sticky='e')
+    label1= Label(root,font=('calibre',15, 'bold'), text='Enter number of allowed images').grid(row=2, column = 0,padx=20,pady=20, sticky='w')
     numberi = Entry(root,width=10, font=font_data)
-    numberi.grid(row=1, column = 0,padx=20,pady=20, sticky='w')
+    numberi.grid(row=3, column = 0,padx=20,pady=20, sticky='w')
     numberi.insert(END,'1')
-    label2= Label(root,font=('calibre',15, 'bold'), text='Enter number of allowed images for person').grid(row=0, column = 2,padx=20,pady=20, sticky='e')
+    label2= Label(root,font=('calibre',15, 'bold'), text='Enter number of allowed images for person').grid(row=2, column = 2,padx=20,pady=20, sticky='w')
     numberp = Entry(root,width=10, font=font_data)
-    numberp.grid(row=1, column = 2,padx=20,pady=20, sticky='w')
+    numberp.grid(row=3, column = 2,padx=20,pady=20, sticky='w')
     numberp.insert(END,'1')
 
 
